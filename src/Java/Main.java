@@ -13,6 +13,8 @@ public class Main {
 
        GuessTheNumber project2 = new GuessTheNumber();
 
+       Hangman hangman = new Hangman();
+
 
 
     }
