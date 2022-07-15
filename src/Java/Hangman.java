@@ -3,6 +3,7 @@ package Java;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Hangman {
@@ -46,12 +47,14 @@ public class Hangman {
             String actual = "";
             String guessHolder = "";
             int winCounter = 0;
-            int random = (int) (Math.random() * 94) + 1;;
+            int random = (int) (Math.random() * 230) + 1;
+
             ArrayList<String> actualHolder = new ArrayList<>();
 
 
             //getting random word
             actual = randomWord(actual, random);
+
 
             //printing the default grid
             printingGrid(grid);
@@ -80,7 +83,8 @@ public class Hangman {
 
             //in the game loop
             while (count <= 6) {
-
+            
+                
                 guess += input.next().charAt(0);
 
                 if (!actualHolder.contains(guess)) {
@@ -94,14 +98,15 @@ public class Hangman {
                         grid = doesntContain(grid, count);
                         guess = "";
                     }
-                } else if (actualHolder.contains(guess)) {
+                }
+                else if (actualHolder.contains(guess)) {
 
                     if (guessHolder.contains(guess)) {
                         guessHolder += guess;
                         System.out.println("You have already guessed that number. Try again");
-                    } else {
-                        word = doesContain(guess, word, actualHolder);
-                        winCounter++;
+                    }
+                    else {
+                        winCounter = doesContain(guess, word, actualHolder, winCounter);
                         guess = "";
                     }
                 }
@@ -112,7 +117,10 @@ public class Hangman {
                     printingWord(word);
                     System.out.println();
                     System.out.println("Yes! The secret word is " + actual + ". You won!");
-                } else if (count != 6) {
+                }
+                else if (count != 6) {
+
+
                     //printing grid
                     printingGrid(grid);
 
@@ -124,7 +132,8 @@ public class Hangman {
                     System.out.println();
 
                     count++;
-                } else if (count == 6) {
+                }
+                else if (count == 6) {
                     //printing grid
                     printingGrid(grid);
 
@@ -164,7 +173,7 @@ public class Hangman {
                 
                 if (count == random) {
 
-                    actual = reader.nextLine();
+                    actual = reader.nextLine().toLowerCase(Locale.ROOT);
                     break;
                 }
                 else {
@@ -226,18 +235,25 @@ public class Hangman {
     }
 
     //second else statement
-    public static ArrayList<String> doesContain(String guess, ArrayList<String> word, ArrayList<String> actualHolder) {
+    public static int doesContain(String guess, ArrayList<String> word, ArrayList<String> actualHolder, int winCounter) {
 
         //copy character from guess to word
         for (int i = 0; i < actualHolder.size(); i++) {
 
-           if (actualHolder.get(i).equals(guess)) {
-
-               word.set(i, guess);
-               actualHolder.set(i, "nothing");
-           }
+            if (actualHolder.get(i).equals(guess)) {
+                word.set(i, guess);
+            }
         }
-        return word;
+        //setting guessed chars to 'nothing'
+        for (int i = 0; i < actualHolder.size(); i++) {
+
+            if (actualHolder.get(i).equals(guess)) {
+                actualHolder.set(i, "nothing");
+                winCounter++;
+
+            }
+        }
+        return winCounter;
     }
 
     //printing grid
@@ -253,7 +269,7 @@ public class Hangman {
         return grid;
     }
     
-    //printing grid
+    //printing word
     public static ArrayList<String> printingWord(ArrayList<String> word) {
 
         for (int i = 0; i < word.size(); i++) {
