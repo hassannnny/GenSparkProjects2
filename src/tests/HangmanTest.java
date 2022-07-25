@@ -1,5 +1,7 @@
-package Java;
+package tests;
 
+import Java.Hangman;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ class HangmanTest {
         String actual = "";
         int random = 5;
 
-        assertEquals("few", Hangman.randomWord(actual, random));
+        Assertions.assertEquals("few", Hangman.randomWord(actual, random));
 
         random = 10;
 
