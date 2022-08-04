@@ -25,6 +25,10 @@ public class Main {
 
         int mover = 0;
 
+        System.out.println("Try to get to the other side without letting the goblin touch you!");
+        System.out.println();
+        System.out.println();
+
 
         while (!isDead) {
 
@@ -82,21 +86,5 @@ public class Main {
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

@@ -196,6 +196,7 @@ public class Hangman {
 
         return missedLetters;
     }
+
     public static String[][] doesntContain(String[][] grid, int i) {
 
         //head
